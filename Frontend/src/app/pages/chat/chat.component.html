@@ -1,0 +1,79 @@
+<div id="container">
+
+  <button id="helpdesk-popup-button" (click)="openSupportPopup()">
+    <img src="assets/img/round_arrow_down_icon_132795.png">
+  </button>
+    <div id="helpdesk-popup" [style.display]="isOpen ? 'block' : 'none'">
+      <div id="helpdesk-popup-header">
+        Chatbot
+        <button id="helpdesk-popup-close-button" (click)="openSupportPopup()">
+          Close
+        </button>
+      </div>
+      <div id="helpdesk-popup-body" #scrollMe [scrollTop]="scrollMe.scrollHeight"> 
+        <div class="messages">
+          <div [ngClass]="
+              input.usuario && !input.error
+                ? 'mensagem'
+                : !input.usuario && input.error
+                ? 'mensagem-bot-error'
+                : 'mensagem-bot'
+            "
+            *ngFor="let input of mensagens" >
+          
+          <span>{{input.mensagem | slice:sliceOptions.start:sliceOptions.end}}</span>
+          <div *ngIf="input.mensagem.length >= sliceOptions.default">          
+            <br>
+          <span class="plus" (click)="onExpandText($event)"> ...</span>
+            <br>
+            <a target="_blank" href="{{input.url}}"> Click here to acess</a>
+          </div>
+            </div>
+            <span class= "marcador" id="target"> </span>       
+          </div>       
+        </div>   
+        <form id="helpdesk-popup-footer" (submit)="onSubmit()">
+          <div id= "sugestions"></div> 
+          <input [(ngModel)]="valor"
+            name="valor"
+            id="helpdesk-popup-input"
+            type="text"
+            autocomplete="off"/>
+          <button
+          id="helpdesk-popup-submit-button"
+            mat-raised-button
+            color
+            color="primary"
+            (click)="enviarDado()"
+            class="botao">
+            <span class="botaoText">enviar</span>
+          </button>
+          <button
+          mat-fab
+          color="primary"
+          (click)="comecarAudio()"
+          class="modal__header__input__botao-audio"
+        >
+          <img
+            src="../../../../../assets/images/microphone.svg"
+            class="modal__header__input__botao-audio-icon"
+            alt=""
+          />
+        </button>
+        <button
+          mat-fab
+          color="primary"
+          (click)="pararAudio()"
+          class="modal__header__input__botao-stop"
+        >
+          <img
+            src="../../../../../assets/images/stop.svg"
+            class="modal__header__input__botao-stop-icon"
+            alt=""
+          />
+        </button>
+        </form>
+    </div>
+</div>
+
+  
