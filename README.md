@@ -1,4 +1,6 @@
-# Chatbot Buscador de cursos
+# RegBot
+
+### Chatbot de apoio na elucidação de dúvidas sobre o regulamento da UFCG
 
 ## Como instalar e executar o sistema
 

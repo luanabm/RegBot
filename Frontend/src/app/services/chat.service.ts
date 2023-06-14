@@ -14,6 +14,7 @@ export class ChatService {
   public async SendMessage(message: string) {
     const body = new FormData();
     body.append('message', message);
+    console.log(message)
     const res = await this.HttpClient.post(
       `http://${this.hostname}:${5555}/message`,
       body
@@ -24,6 +25,7 @@ export class ChatService {
   public async SendQuery(message: string) {
     const body = new FormData();
     body.append('message', message);
+    console.log(message)
     const res = await this.HttpClient.post(
       `http://${this.hostname}:${5555}/query`,
       body
@@ -31,27 +33,14 @@ export class ChatService {
     return res;
   }
 
-  public async sendAudio(audio: Blob) {
+  public startAudioBack() {
     const body = new FormData();
-
-    body.append('audio', audio);
-
-    this.HttpClient.post(`http://${this.hostname}:${5555}/audio`, body)
-      .toPromise()
-      .then(() => {
-        console.log('audio send');
-      });
-  }
-
-  public async startAudioBack() {
-    const body = new FormData();
-    body.append('mensage', JSON.stringify({ audio: true }));
-    return new Promise((res, rej) => {
-      this.HttpClient.post(`http://${this.hostname}:${5555}/start-audio`, body)
+    body.append('message', JSON.stringify({ audio: true }));
+    const res = this.HttpClient.post(`http://${this.hostname}:${5555}/`, body)
         .toPromise()
-        .then((resolve) => {
-          res(resolve);
-        });
-    });
+        console.log(res)
+    return res;
   }
+
+  
 }

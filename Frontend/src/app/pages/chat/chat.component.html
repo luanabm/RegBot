@@ -5,7 +5,7 @@
   </button>
     <div id="helpdesk-popup" [style.display]="isOpen ? 'block' : 'none'">
       <div id="helpdesk-popup-header">
-        Chatbot
+        RegBot
         <button id="helpdesk-popup-close-button" (click)="openSupportPopup()">
           Close
         </button>
@@ -20,20 +20,25 @@
                 : 'mensagem-bot'
             "
             *ngFor="let input of mensagens" >
-          
-          <span>{{input.mensagem | slice:sliceOptions.start:sliceOptions.end}}</span>
-          <div *ngIf="input.mensagem.length >= sliceOptions.default">          
+            <span *ngIf="!input.audio">{{ input.mensagem }}</span>
+            <div *ngIf="input.audio">
+              <div id="audio"> <audio
+                controls="true"
+                class="modal__area-text__mensagem-audio"
+                [src]="input.mensagem"
+              ></audio></div>
+              
+            </div>
+          <div *ngIf="input && input.mensagem && input.mensagem.length >= sliceOptions.default">          
             <br>
           <span class="plus" (click)="onExpandText($event)"> ...</span>
             <br>
-            <a target="_blank" href="{{input.url}}"> Click here to acess</a>
           </div>
             </div>
             <span class= "marcador" id="target"> </span>       
           </div>       
         </div>   
         <form id="helpdesk-popup-footer" (submit)="onSubmit()">
-          <div id= "sugestions"></div> 
           <input [(ngModel)]="valor"
             name="valor"
             id="helpdesk-popup-input"
@@ -55,7 +60,7 @@
           class="modal__header__input__botao-audio"
         >
           <img
-            src="../../../../../assets/images/microphone.svg"
+            [src]= "imagemSrc"
             class="modal__header__input__botao-audio-icon"
             alt=""
           />
@@ -67,7 +72,7 @@
           class="modal__header__input__botao-stop"
         >
           <img
-            src="../../../../../assets/images/stop.svg"
+            src="../../../assets/img/music-stop-button_98183.svg"
             class="modal__header__input__botao-stop-icon"
             alt=""
           />

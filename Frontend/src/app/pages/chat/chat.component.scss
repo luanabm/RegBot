@@ -12,18 +12,44 @@
     top: 10px;
 }
 
+.modal__header__input__botao-audio {
+  border: none;
+  padding-left: 4px;
+  background-color: rgb(160, 156, 156);
+}
+.modal__header__input__botao-stop {
+  padding-left: 4px;
+  border: none;
+  background-color: rgb(160, 156, 156);
+}
+.modal__header__input__botao-audio-icon{
+  width: 29px;
+  background-color: rgb(160, 156, 156);
+  border: none;
+}
+.modal__area-text__mensagem-audio{
+  width: 230px;
+  margin-top: 5px;
+  height: 30px;
+}
+
+.modal__header__input__botao-stop-icon{
+  width: 29px;
+  background-color: rgb(160, 156, 156);
+  border: none;
+}
 .scrollarea {
   min-height: 500px;
 }
 
 #helpdesk-popup {
   position: fixed;
-  bottom: 180px;
+  bottom: 70px;
   right: 20px;
   width: 300px;
   height: 50vh;
   min-height: 450px;
-  background-color: white;
+  background-color: rgb(160, 156, 156);
   border-radius: 15px;
   z-index: 1000;
   display: none;
@@ -98,7 +124,7 @@
 
 
 #helpdesk-popup-footer {
-  background-color: white;
+  background-color: rgb(160, 156, 156);
   color: white;
   font-size: 14px;
   padding: 10px;
@@ -109,7 +135,7 @@
   #helpdesk-popup-input {
     margin-top:15px;
     padding: 5px;
-    width: 75%;
+    width: 150px;
   }
 
   #helpdesk-popup-submit-button {
@@ -146,7 +172,11 @@
       }
 
       
-
+      #audio {
+      
+        transform: scaleY(0.3);
+        transform: scaleX(0.9);
+      }
 
 
 
@@ -162,6 +192,8 @@
   font-size: 14px;
   float: right;
 }
+
+
 
 .botaoText {
   margin-left: auto;
@@ -180,7 +212,6 @@
   opacity: 1;
   image-resolution: 100px;
   width: fit-content;
-  max-width: 50%;
   height: fit-content;
   padding-left: 10px;
   padding-right: 10px;

@@ -3,5 +3,4 @@ export interface Chat {
     usuario: boolean;
     error: boolean;
     audio: boolean;
-    url: any;
 }

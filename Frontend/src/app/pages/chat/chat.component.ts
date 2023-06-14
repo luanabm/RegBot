@@ -11,16 +11,18 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 export class ChatComponent implements OnInit {
   private blocked: boolean = false;
+  imagemSrc = '../../../assets/img/microphoneoutlinedcircularbutton_104664.svg';
+  
 
   isOpen = false;
 
   mensagens: Chat[] = [];
   valor: string;
   usuario = true;
-  url: string;
   chunks: Blob[] = [];
   mediaRecorder: any;
   canRecord = true;
+  resp: any
 
   sliceOptions = {
     start: 0,
@@ -31,13 +33,11 @@ export class ChatComponent implements OnInit {
   constructor(private service: ChatService, private dom: DomSanitizer,
     private cd: ChangeDetectorRef) {
     this.mensagens.push({
-      mensagem: String('Hi, I am your support agent. How can I assist you?'),
+      mensagem: String('Oi, sou seu RegBot. Me diga o que deseja?'),
       usuario: false,
       error: true,
       audio: false,
-      url : "",
     }); 
-    this.sugestion(); 
   }
   ngOnInit(): void {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -61,17 +61,39 @@ export class ChatComponent implements OnInit {
           usuario: true,
           error: false,
           audio: true,
-          url: true
         });
         const audioFiles = []
         audioFiles.push(this.dom.bypassSecurityTrustUrl(audioURL));
         console.log('recorder stopped');
         this.cd.detectChanges();
+        this.mensagens.push({
+          mensagem: String(this.resp.pergunta),
+          usuario: true,
+          error: false,
+          audio: false,
+        });
+        
+        if (this.resp.tag != 'indefinido'){
+          this.preencherMensagem(this.resp.data);
+        } else {
+          for(const message of this.resp.data){
+            console.log(message)
+            this.mensagens.push({
+              mensagem: `Num: ${message.num}, Artigo: ${message.regulation}, Parágrafo: ${message.paragraph}`,
+              usuario: false,
+              error: false,
+              audio: false,
+            });
+          }
+        }
+        
       };
       
       this.mediaRecorder.ondataavailable = (e: BlobEvent) => {
         this.chunks.push(e.data);
       };
+
+      this.resp = ""
     },).catch();
   }
 
@@ -88,13 +110,12 @@ export class ChatComponent implements OnInit {
     return this.valor != null ? this.valor : null;
   }
 
-  async preencherMensagem(response: any, link: any) {
+  async preencherMensagem(response: any) {
     this.mensagens.push({
       mensagem: response,
       usuario: false,
       error: false,
       audio: false,
-      url: String(link)
     });
   }
   async enviarDado() {
@@ -105,27 +126,29 @@ export class ChatComponent implements OnInit {
         usuario: true,
         error: false,
         audio: false,
-        url: "",
       });
+      console.log(this.blocked)
       if (!this.blocked){
         const response: any = await this.service.SendMessage(this.valor);
         this.valor = ""
-        this.preencherMensagem(response.data,"");
+        this.preencherMensagem(response.data);
         element!.scrollIntoView(false);
         if(response.tag == "query"){
           this.blocked = true;
         }
+        console.log(this.blocked)
       }else{
         const response: any = await this.service.SendQuery(this.valor);
         console.log(this.valor)
-        this.valor = ""
-        this.preencherMensagem("I found these courses that may suit your query:", "")
-        
+        this.valor = ""        
         for(const message of response.data){
           console.log(message)
-          this.preencherMensagem("The course " + message.name + ", rated " + message.rated + 
-          " is offered by " + message.host + "and has difficulty level " + message.difficultie + ".\n\n" + 
-          message.description + "\n\n In this course you will learn: " + message.skill, message.url);
+          this.mensagens.push({
+            mensagem: `Num: ${message.num}, Artigo: ${message.regulation}, Parágrafo: ${message.paragraph}`,
+            usuario: false,
+            error: false,
+            audio: false,
+          });
         }
         this.blocked = false;
       }
@@ -133,34 +156,12 @@ export class ChatComponent implements OnInit {
       this.preencherMensagemVazia();
     }
   }
-  async sugestion() {
-    var cursos = ["python", "tensorflow", "ia", "ti"];
-    var curso = Math.floor(Math.random() * cursos.length);
-    var random = cursos[curso] 
-    this.blocked = true;
-    const response: any = await this.service.SendQuery(random);      
-        console.log(curso)
-        for(const message of response.data){
-          console.log(message)
-          console.log(message.url)
-          const myDiv = document.createElement('div');
-          myDiv.innerHTML = (message.name).link(message.url);
-          myDiv.style.color = 'black'
-          myDiv.style.overflow = 'auto';
-          myDiv.style.fontSize = '10px';
-          myDiv.style.padding = '10px';
-          myDiv.style.background ='(173, 165, 165, 0.404)';
-          document.getElementById('sugestions')?.appendChild(myDiv); // Adiciona myDiv na div com o ID "sugestions"
-        } 
-        this.blocked = false;
-  }
   preencherMensagemVazia() {
     this.mensagens.push({
-      mensagem: String('Empty message. How can I help you?'),
+      mensagem: String('Mensagem vazia. Em que posso ajudar?'),
       usuario: false,
       error: true,
       audio: false,
-      url : "",
     });
   }
 
@@ -168,24 +169,20 @@ export class ChatComponent implements OnInit {
     this.mediaRecorder.stop();
     console.log(this.mediaRecorder.state);
     console.log('recorder stopped');
+    this.imagemSrc = '../../../assets/img/microphoneoutlinedcircularbutton_104664.svg'
   }
 
   comecarAudio() {
     this.mediaRecorder.start();
     console.log(this.mediaRecorder.state);
     console.log('recorder started');
-    setTimeout(() => {
-      this.pararAudio();
-    }, 5000);
+    this.imagemSrc = '../../../assets/img/microphonevoicetoolcircularblackbutton_104779.svg'
+    
     this.service.startAudioBack().then((res: any) => {
-      this.mensagens.push({
-        mensagem: String(res.pergunta),
-        usuario: true,
-        error: false,
-        audio: false,
-        url: true,
-      });
-      this.preencherMensagem(res.data, "");
+      console.log(res)
+        this.resp = res;
+        this.pararAudio()
+      
     });
     setInterval(() => {
       this.canRecord = true;

@@ -1,35 +1,33 @@
 
 def getResponses():
     return {
-        "greeting": ["Hello, there!",
-                     "Hi, My name is VirtusBot, what can I help you with?",
-                     "Greetings, I am VirtusBot. How may I assist you?",
-                     "Hey, this is VirtusBot, what do you wish?"],
+        "greeting":  ["Olá, tudo bem?",
+                    "Oi, meu nome é RegBot, como posso ajudar?",
+                    "Saudações, eu sou o RegBot. Como posso ajudá-lo?",
+                    "E aí, aqui é o RegBot, o que você deseja?"],
 
-        "goodbye": ["Farewell, my friend.",
-                    "It was a pleasure talking to you, see you next time.",
-                    "See you.",
-                    "Bye."], 
+        "query":   ["Ok, sobre que artigo da regulamentação da UFCG você gostaria de pesquisar?",
+                    "Certo, me diga sobre que tema você quer pesquisar.",
+                    "Ótimo! O que você quer se informar?",
+                    "Posso ajudá-lo a encontrar um artigo sobre as diretrizes da UFCG. Sobre o que você quer aprender?"],
 
-        "thanks": ["You are welcome!",
-                   "Anytime.",
-                   "I\'m glad I could help you."], 
+        "goodbye":      ["Adeus, meu amigo.",
+                    "Foi um prazer conversar com você, até a próxima.",
+                    "Até logo.",
+                    "Tchau."], 
 
-        "use": ["When you want, I can help you find a course on any topic you desire, just ask me and i will look around.",
-                "I can find content on any topic for you, and can also tell you a joke, just ask me.",
-                "I was programmed to help you find courses on whatever topic you desire. just ask and I will do it."], 
+        "thanks":["De nada!",
+                    "A qualquer hora.",
+                    "Fico feliz em poder ajudá-lo."], 
+
+        "use":     ["Quando você quiser, posso ajudá-lo a encontrar um artigo sobre as diretrizes da UFCG que desejar, é só me perguntar e eu vou procurar.",
+                    "Eu posso encontrar conteúdo sobre as diretrizes da UFCG, e também posso contar uma piada, é só me perguntar.",
+                    "Fui programado para ajudá-lo a encontrar o artigo na regulamentação da UFCG que desejar. É só pedir e eu farei."], 
                 
-        "me": ["I'm VirtusBot, your personal content assistant.",
-               "I am VirtusBot, a chatbot programmed to make your search for courses easier",
-               "My name is VirtusBot. I am being developed to help you find courses that you'd like."],
-
-        "query": ["Okay, what subject would you like to search about?",
-                  "Right, tell me what topic do you want to search about.",
-                  "Fine! What do you want to learn?",
-                  "I can help you find a course about anything. What topic do you want to learn about?"],
+        "me":      ["Eu sou o RegBot, seu assistente pessoal de conteúdo.",
+                    "Eu sou o RegBot, um chatbot programado para facilitar sua busca por diretizes na regulamentação da UFCG",
+                    "Meu nome é RegBot. Estou sendo desenvolvido para ajudá-lo a encontrar diretizes na regulamentação da UFCG."],
         
-        "funny": ["Why didn't the chicken cross the street? It was too wide",
-                  "I invented a new word! Plagiarism",
-                  "Helvetica and Times New Roman walk into a bar. \"Get out of here!\" shouts the bartender. \"We don\'t serve your type.\""],
+
             
     }
